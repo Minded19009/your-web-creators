@@ -1,0 +1,47 @@
+# YOUR WEB CREATORS — Apache 2.4+, mod_rewrite, AllowOverride All
+# Default: install the contents at a domain / virtual-host document root.
+# For a subfolder, change RewriteBase and ErrorDocument as described in README.
+Options -Indexes -MultiViews
+DirectoryIndex index.html
+DirectorySlash Off
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Canonical home. THE_REQUEST prevents redirects after internal rewrites.
+  RewriteCond %{THE_REQUEST} \s/+[^\s?]*index(?:\.html)?[?\s] [NC]
+  RewriteRule ^index(?:\.html)?$ ./ [R=301,L]
+
+  # /services.html -> /services, including nested service and template files.
+  RewriteCond %{THE_REQUEST} \s/+[^\s?]*\.html[?\s] [NC]
+  RewriteRule ^(.+)\.html$ $1 [R=301,L,NE]
+
+  # Listing pages take precedence over same-named content directories.
+  RewriteRule ^(services|work|blog)/$ $1 [R=301,L]
+
+  # /services/seo -> services/seo.html; do this before directory handling.
+  RewriteCond %{REQUEST_FILENAME}.html -f
+  RewriteRule ^(.+?)/?$ $1.html [END]
+
+  # Serve real assets/directories normally. Unknown paths keep a real 404.
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [END]
+</IfModule>
+
+ErrorDocument 404 /404
+
+<IfModule mod_mime.c>
+  AddType image/svg+xml .svg
+  AddType video/mp4 .mp4
+  AddType text/css .css
+  AddType application/javascript .js
+</IfModule>
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript image/svg+xml
+</IfModule>
