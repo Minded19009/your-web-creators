@@ -601,3 +601,7 @@ small,.small{font-size:12px;line-height:1.7}
 @media print{.site-header,.site-footer,.theme-toggle,.hero-video,.service-preview,.button,.filter-bar,.slider-controls{display:none!important}body{background:#fff;color:#000;font-size:11pt}h1{font-size:36pt}h2{font-size:25pt}.section,.page-hero{padding:24px 0}.shell{padding:0 15px}.legal-layout,.article-layout{display:block}.legal-toc,.article-aside{display:none}p{color:#333}.contact-band,.simple-cta{background:#fff;color:#000}.price-panel--best{background:#fff;color:#000;--text-pri:#000;--text-sec:#333;--border-pri:#ccc}.project-card{break-inside:avoid}a{text-decoration:underline}.home-hero{color:#000;min-height:0}.hero-shade{display:none}.hero-content{min-height:0}.hero-title{font-size:50pt}.hero-title .type-line{color:#333}.hero-lower p{color:#333}.hero-bottom{display:none}}
 
 .detail-index{font-size:11px;letter-spacing:.08em;flex-shrink:0;color:var(--text-sec)}
+
+.case-image img {
+  object-position: top center;
+}
